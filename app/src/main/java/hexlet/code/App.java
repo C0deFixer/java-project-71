@@ -14,6 +14,12 @@ import java.util.concurrent.Callable;
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
         description = "Compares two configuration files and shows a difference.")
 public class App {
+    @Parameters(paramLabel = "filepath1", description = "path to first file")
+    File fileFirst;
+    @Parameters(paramLabel = "filepath2", description = "path to second file")
+    File fileSecond;
+    @Option(names = { "-f", "--format" }, paramLabel = "format", description = "output format [default: stylish]")
+    File archive;
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
