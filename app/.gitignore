@@ -51,3 +51,4 @@ build
 bin
 .project*
 .idea/
+src/main/resources/
