@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Differ {
     public static String generate(Map<String, String> firstMap, Map<String, String> secondMap) {
-        return compare(firstMap, secondMap).toString();
+        return convertToString(compare(firstMap, secondMap));
     }
 
     public static Map<String, String> compare(Map<String, String> firstMap, Map<String, String> secondMap){

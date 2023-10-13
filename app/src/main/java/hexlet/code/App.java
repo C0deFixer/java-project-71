@@ -6,16 +6,10 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
-
+import static hexlet.code.Utils.getJsonDataAsMap;
+import static hexlet.code.Utils.readJsonContentFile;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
         description = "Compares two configuration files and shows a difference.")
@@ -34,39 +28,31 @@ public class App implements Callable<String> {
         //System.out.println(getData(json1).toString());
         //System.out.println(getData(json2).toString());
 
-        // get AbsolutePath
-        Path firstFilePath = Paths.get(firstFile).toAbsolutePath().normalize();
 
-        // Is Exist
-        if (!Files.exists(firstFilePath)) {
-            throw new Exception("First File '" + firstFilePath + "' does not exist");
-        }
-
-        // get AbsolutePath
-        Path secondFilePath = Paths.get(secondFile).toAbsolutePath().normalize();
-
-        // Is Exist
-        if (!Files.exists(secondFilePath)) {
-            throw new Exception("Second File '" + secondFilePath + "' does not exist");
-        }
-
-        // Reading content
-        String firstFileContent = Files.readString(firstFilePath);
-        String secondFileContent = Files.readString(secondFilePath);
+        // Reading content using method of Utils Class
+/*        String firstFileContent = readJsonContentFile(firstFile);
+        String secondFileContent = readJsonContentFile(secondFile);*/
 
 /*        System.out.println(firstFileContent);
         System.out.println(secondFileContent);*/
-        String result = Differ.generate(getData(firstFileContent), getData(secondFileContent));
+        //String result = Differ.generate(getJsonDataAsMap(firstFileContent), getJsonDataAsMap(secondFileContent));
+        String result = generate(firstFile, secondFile);
         System.out.println(result);
         return result;
     }
 
+    public static String generate(String file1, String file2) throws Exception { // your business logic goes here...
+
+        // Reading content using method of Utils Class
+        String firstFileContent = readJsonContentFile(file1);
+        String secondFileContent = readJsonContentFile(file2);
+
+        String result = Differ.generate(getJsonDataAsMap(firstFileContent), getJsonDataAsMap(secondFileContent));
+        return result;
+    }
     public static void main(String[] args) throws Exception {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }
-    public static Map<String, String> getData(String content) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(content, new TypeReference<Map<String,String>>(){});
-    }
+
 }
