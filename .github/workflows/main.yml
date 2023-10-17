@@ -14,11 +14,11 @@ jobs:
         with:
           java-version: '20'
           distribution: 'temurin'
-      - name: Setup Gradle   
+      # - name: Setup Gradle   
       - uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 8.3
-      - name: Execute Gradle build
+      # - name: Execute Gradle build
       - run: gradle build --dry-run # just test build configuration
       - run: ./gradlew checkstyleMain
       - run: ./gradlew test
