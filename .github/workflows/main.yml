@@ -19,9 +19,9 @@ jobs:
         with:
           gradle-version: 8.3
       # - name: Execute Gradle build
-      - run: gradle build --dry-run # just test build configuration
-      - run: ./gradlew checkstyleMain
-      - run: ./gradlew test
+      - run: ./app/gradlew build --dry-run # just test build configuration
+      - run: ./app/gradlew checkstyleMain
+      - run: ./app/gradlew test
       # - name: Publish code coverage
       #   uses: paambaati/codeclimate-action@v5.0.0
       #   env:
