@@ -19,7 +19,7 @@ jobs:
         with:
           gradle-version: 8.3
       # - name: Execute Gradle build
-      - run: ./app/gradlew build --dry-run # just test build configuration
+      # - run: ./app/gradlew build --dry-run # just test build configuration
       - run: ./app/gradlew checkstyleMain
       - run: ./app/gradlew test
       # - name: Publish code coverage
