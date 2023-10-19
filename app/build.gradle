@@ -1,3 +1,6 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     id 'application'
     id 'checkstyle'
@@ -24,6 +27,13 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        exceptionFormat = TestExceptionFormat.FULL
+        events = mutableSetOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
+        // showStackTraces = true
+        // showCauses = true
+        showStandardStreams = true
+    }
 }
 
 application {
@@ -40,6 +50,7 @@ run {
 }
 
 jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
     reports {
         xml.required.set(true)
         //xml.required = false
