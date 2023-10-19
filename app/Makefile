@@ -7,6 +7,7 @@ setup:
 clean:
 	./gradlew clean
 
+.PHONY: build
 build:
 	./gradlew clean build
 
@@ -19,6 +20,7 @@ run-dist:
 run:
 	./gradlew run
 
+.PHONY: test
 test:
 	./gradlew test
 
@@ -33,5 +35,3 @@ check-deps:
 
 
 build-run: build run
-
-.PHONY: build
