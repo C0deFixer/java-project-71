@@ -23,6 +23,7 @@ public class Utils {
 
     public static Map<String, String> getJsonDataAsMap(String content) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(content, new TypeReference<Map<String,String>>(){});
+        return objectMapper.readValue(content, new TypeReference<Map<String, String>>() {
+        });
     }
 }
