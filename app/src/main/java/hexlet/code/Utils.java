@@ -1,15 +1,13 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import java.nio.file.FileSystems;
+import java.nio.file.PathMatcher;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 
 public class Utils {
-    public static String readJsonContentFile(String filePathString) throws Exception {
+    public static Path getAbsoluteFilePath(String filePathString) throws Exception {
         // get AbsolutePath
         Path filePath = Paths.get(filePathString).toAbsolutePath().normalize();
 
@@ -18,12 +16,19 @@ public class Utils {
             throw new Exception("File '" + filePathString + "' does not exist");
         }
 
-        return Files.readString(filePath);
+        return filePath;
     }
 
-    public static Map<String, String> getJsonDataAsMap(String content) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(content, new TypeReference<Map<String, String>>() {
-        });
+
+    public static boolean isFileFormatMatch(Path filePath, String fileFormat) {
+        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:*." + fileFormat);
+        if (matcher.matches(filePath)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static String readContentFile(Path filePath) throws Exception {
+        return Files.readString(filePath);
     }
 }
