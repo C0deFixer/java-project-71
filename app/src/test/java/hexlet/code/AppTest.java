@@ -15,8 +15,8 @@ public class AppTest {
     public static final String SECOND_FILE_JSON = "file2.json";
     public static final String EXPECTED_RESULT_JSON = "expected_json.txt";
 
-    public static final String FIRST_FILE_YAML = "file1.json";
-    public static final String SECOND_FILE_YAML = "file2.json";
+    public static final String FIRST_FILE_YAML = "file1.yaml";
+    public static final String SECOND_FILE_YAML = "file2.yaml";
     public static final String EXPECTED_RESULT_YAML = "expected_yaml.txt";
 
     @Test
