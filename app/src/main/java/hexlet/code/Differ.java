@@ -1,53 +1,58 @@
 package hexlet.code;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Differ {
-    public static String generate(Map<String, String> firstMap, Map<String, String> secondMap) {
-        return convertToString(compare(firstMap, secondMap));
+    public static Map<String, Map<String, Object>>  generate(Map<String, Object> firstMap, Map<String, Object> secondMap) {
+        return compare(firstMap, secondMap);
     }
 
-    public static Map<String, String> compare(Map<String, String> firstMap, Map<String, String> secondMap) {
-        SortedSet<String> keys = new TreeSet<>() {
-        };
-        keys.addAll(firstMap.keySet());
-        keys.addAll(secondMap.keySet());
-        LinkedHashMap<String, String> result = new LinkedHashMap<>();
+    public static Map<String, Map<String, Object>> compare(Map<String, Object> firstMap,
+                                                           Map<String, Object> secondMap) {
+        Set<String> keys = Stream.concat(firstMap.keySet().stream(), secondMap.keySet().stream())
+                .sorted()
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        // Map Compare:  Key - is a Key, Value is a mapDiffer - contains type of modification and old & new values
+        Map<String, Map<String, Object>> resultMapCompare = new LinkedHashMap<>();
+
 
         for (String key : keys) {
+            Map<String, Object> mapDiffer =  new HashMap<>();
             if (!firstMap.containsKey(key)) {
                 //added
-                result.put("+ " + key.toString(), secondMap.get(key));
+                mapDiffer.put("type", "added");
+                mapDiffer.put("newValue", secondMap.get(key));
             } else if (!secondMap.containsKey(key)) {
                 //deleted
-                result.put("- " + key.toString(), firstMap.get(key));
-            } else if (firstMap.get(key) == null
-                    && secondMap.get(key) == null
-                    || firstMap.get(key).equals(secondMap.get(key))) {
+                mapDiffer.put("type", "deleted");
+                mapDiffer.put("oldValue", firstMap.get(key));
+            } else if (firstMap.get(key) != null
+                    && secondMap.get(key) != null
+                    && firstMap.get(key).equals(secondMap.get(key))
+                    || firstMap.get(key) == null
+                    && secondMap.get(key) == null) {
                 //equals
-                result.put("  " + key.toString(), firstMap.get(key));
+                mapDiffer.put("type", "equals");
+                mapDiffer.put("oldValue", firstMap.get(key));
+                mapDiffer.put("newValue", secondMap.get(key));
             } else {
                 //changed
-                result.put("+ " + key.toString(), firstMap.get(key));
-                result.put("- " + key.toString(), secondMap.get(key));
+                mapDiffer.put("type", "changed");
+                mapDiffer.put("oldValue", firstMap.get(key));
+                mapDiffer.put("newValue", secondMap.get(key));
             }
+            resultMapCompare.put(key,mapDiffer);
         }
-        return result;
+        return resultMapCompare;
 
     }
 
-    public static String convertToString(Map<String, String> map) {
-        final StringBuilder sb = new StringBuilder("{");
-        for (Map.Entry<String, String> ent : map.entrySet()) {
-            sb.append("\n ").append(ent.getKey()).append(": ").append(ent.getValue());
-        }
-        sb.append("\n}");
-        return sb.toString();
-    }
+
+
 
 }
 

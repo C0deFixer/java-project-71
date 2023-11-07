@@ -7,6 +7,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Parser {
     //Map of Lists file Format End Of, which supported end could be parsed
@@ -31,7 +32,7 @@ public class Parser {
     }
 
 
-    public static Map<String, String> parseContentFileToMap(String content, String fileFormat) throws Exception {
+    public static Map<String, Object> parseContentFileToMap(String content, String fileFormat) throws Exception {
 
         switch (fileFormat) {
             case "json":
@@ -43,18 +44,18 @@ public class Parser {
         }
     }
 
-    public static Map<String, String> getJsonDataAsMap(String content) throws Exception {
+    public static Map<String, Object> getJsonDataAsMap(String content) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, String> stringMap = objectMapper.readValue(content, new TypeReference<Map<String, String>>() {
+        Map<String, Object> objectMap = objectMapper.readValue(content, new TypeReference<Map>() {
         });
-        return stringMap;
+        return objectMap;
     }
 
-    public static Map<String, String> getYamlDataAsMap(String content) throws Exception {
+    public static Map<String, Object> getYamlDataAsMap(String content) throws Exception {
         ObjectMapper objectMapper = new YAMLMapper();
         // Method inherit from com.fasterxml.jackson.databind.ObjectMapper;
-        Map<String, String> stringMap = objectMapper.readValue(content, new TypeReference<Map<String, String>>() {
+        Map<String, Object> objectMap = objectMapper.readValue(content, new TypeReference<Map>() {
         });
-        return stringMap;
+        return objectMap;
     }
 }

@@ -19,6 +19,8 @@ public class AppTest {
     public static final String SECOND_FILE_YAML = "file2.yaml";
     public static final String EXPECTED_RESULT_YAML = "expected_yaml.txt";
 
+    public static final String DEFAULT_FORMAT = "stylish";
+
     @Test
     @DisplayName("Test Json files compare")
     public void testGenerateJson() throws Exception {
@@ -31,7 +33,7 @@ public class AppTest {
 
         String expected = Files.readString(expectedFilePath);
 
-        String actual = App.generate(firstFilePath.toString(), secondFilePath.toString());
+        String actual = App.generate(firstFilePath.toString(), secondFilePath.toString(), DEFAULT_FORMAT);
 
         Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")), Arrays.stream(expected.split("\n")));
 
@@ -50,7 +52,7 @@ public class AppTest {
 
         String expected = Files.readString(expectedFilePath);
 
-        String actual = App.generate(firstFilePath.toString(), secondFilePath.toString());
+        String actual = App.generate(firstFilePath.toString(), secondFilePath.toString(), DEFAULT_FORMAT);
 
         Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")), Arrays.stream(expected.split("\n")));
 
