@@ -52,11 +52,11 @@ public class PlainFormatter {
             sb.append("'")
                     .append(value)
                     .append("'");
-        }
-        else if (value instanceof List<?> || value instanceof Map<?,?>) {
+        } else if (value instanceof List<?> || value instanceof Map<?, ?>) {
             sb.append("[complex value]");
+        } else {
+            sb.append(value == null ? "null" : value.toString());
         }
-        else sb.append(value  == null ? "null": value.toString());
     }
 
 }

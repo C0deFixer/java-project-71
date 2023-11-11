@@ -53,7 +53,7 @@ public class App implements Callable<String> {
         Map<String, Object> fileContentMap2 = Parser.parseContentFileToMap(contentFile2, fileFormat2);
 
         Map<String, Map<String, Object>> resultMapCompare = Differ.generate(fileContentMap1, fileContentMap2);
-        return Formatter.convertToString(resultMapCompare, format.replaceAll("\\s",""));
+        return Formatter.convertToString(resultMapCompare, format.replaceAll("\\s", ""));
     }
 
     public static void main(String[] args) throws Exception {

@@ -1,12 +1,17 @@
 package hexlet.code;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
 public class Differ {
-    public static Map<String, Map<String, Object>>  generate(Map<String, Object> firstMap, Map<String, Object> secondMap) {
+    public static Map<String, Map<String, Object>> generate(Map<String,
+            Object> firstMap, Map<String, Object> secondMap) {
         return compare(firstMap, secondMap);
     }
 
@@ -21,7 +26,7 @@ public class Differ {
 
 
         for (String key : keys) {
-            Map<String, Object> mapDiffer =  new HashMap<>();
+            Map<String, Object> mapDiffer = new HashMap<>();
             if (!firstMap.containsKey(key)) {
                 //added
                 mapDiffer.put("type", "added");
@@ -45,13 +50,11 @@ public class Differ {
                 mapDiffer.put("oldValue", firstMap.get(key));
                 mapDiffer.put("newValue", secondMap.get(key));
             }
-            resultMapCompare.put(key,mapDiffer);
+            resultMapCompare.put(key, mapDiffer);
         }
         return resultMapCompare;
 
     }
-
-
 
 
 }

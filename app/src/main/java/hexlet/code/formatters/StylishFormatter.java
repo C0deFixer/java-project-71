@@ -38,7 +38,7 @@ public class StylishFormatter {
                 .append(" ")
                 .append(entKey)
                 .append(": ")
-                .append(value  == null ? "null": value.toString());
+                .append(value == null ? "null" : value.toString());
 
     }
 }

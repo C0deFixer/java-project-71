@@ -7,7 +7,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class Parser {
     //Map of Lists file Format End Of, which supported end could be parsed
