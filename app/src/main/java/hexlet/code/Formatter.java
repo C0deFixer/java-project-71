@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.formatters.JsonFormatter;
 import hexlet.code.formatters.PlainFormatter;
 import hexlet.code.formatters.StylishFormatter;
 
@@ -13,6 +14,8 @@ public class Formatter {
                 return StylishFormatter.convertToString(map);
             case "plain":
                 return PlainFormatter.convertToString(map);
+            case "json":
+                return JsonFormatter.convertToString(map);
             default:
                 throw new Exception("Unknown output format");
 
