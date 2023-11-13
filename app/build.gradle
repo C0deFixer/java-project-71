@@ -20,7 +20,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation("org.assertj:assertj-core:3.22.0")
     implementation 'info.picocli:picocli:4.7.5'
-    //https://central.sonatype.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.15.2
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
     implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.14.2'
 }
@@ -35,7 +34,6 @@ application {
 
 compileJava {
     options.release = 20
-    //options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
 }
 
 run {
@@ -46,9 +44,6 @@ jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
     reports {
         xml.required.set(true)
-        //xml.required = false
-        //csv.required = false
-        //html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }
 

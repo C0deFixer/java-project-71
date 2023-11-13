@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -106,9 +105,11 @@ public class AppTest {
 
         ObjectMapper om = new ObjectMapper();
 
-        Map<String, Map<String, Object>> mapActual = om.readValue(actual, new TypeReference<Map<String, Map<String, Object>>>() {
+        Map<String, Map<String, Object>> mapActual
+                = om.readValue(actual, new TypeReference<Map<String, Map<String, Object>>>() {
         });
-        Map<String, Map<String, Object>> mapExpected = om.readValue(expected, new TypeReference<Map<String, Map<String, Object>>>() {
+        Map<String, Map<String, Object>> mapExpected
+                = om.readValue(expected, new TypeReference<Map<String, Map<String, Object>>>() {
         });
 
         for (Map.Entry<String, Map<String, Object>> entry : mapExpected.entrySet()) {
@@ -118,7 +119,8 @@ public class AppTest {
                 MapAssert ama = new MapAssert(mapActual.get(entry.getKey()));
                 ama.containsExactlyEntriesOf(expectedValue);
 
-            } else throw new Exception("Property '" + entry.getKey() + "' expected , but missed in result of compare!");
+            } else {throw new Exception("Property '" + entry.getKey() + "' expected , but missed in result of compare!");
+            }
         }
     }
 }
