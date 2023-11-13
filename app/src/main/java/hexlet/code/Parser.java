@@ -39,7 +39,7 @@ public class Parser {
             case "yaml":
                 return getYamlDataAsMap(content);
             default:
-                throw new Exception("File format '" + fileFormat + "' does not supported !");
+                throw new Exception("Unknown File format: '" + fileFormat + "' !");
         }
     }
 
