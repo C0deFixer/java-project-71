@@ -107,10 +107,10 @@ public class AppTest {
 
         Map<String, Map<String, Object>> mapActual
                 = om.readValue(actual, new TypeReference<Map<String, Map<String, Object>>>() {
-        });
+                });
         Map<String, Map<String, Object>> mapExpected
                 = om.readValue(expected, new TypeReference<Map<String, Map<String, Object>>>() {
-        });
+                });
 
         for (Map.Entry<String, Map<String, Object>> entry : mapExpected.entrySet()) {
             if (mapActual.containsKey(entry.getKey())) {
@@ -119,7 +119,8 @@ public class AppTest {
                 MapAssert ama = new MapAssert(mapActual.get(entry.getKey()));
                 ama.containsExactlyEntriesOf(expectedValue);
 
-            } else {throw new Exception("Property '" + entry.getKey() + "' expected , but missed in result of compare!");
+            } else {
+                throw new Exception("Property '" + entry.getKey() + "' expected , but missed in result of compare!");
             }
         }
     }
