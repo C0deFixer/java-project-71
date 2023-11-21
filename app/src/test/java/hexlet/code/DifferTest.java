@@ -1,8 +1,7 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.MapAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +15,8 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+class DifferTest {
 
-public class AppTest {
     public static final String FIRST_FILE_JSON = "file1.json";
     public static final String SECOND_FILE_JSON = "file2.json";
     public static final String EXPECTED_RESULT_JSON = "expected_json.txt";
@@ -35,7 +34,7 @@ public class AppTest {
     @Test
     @DisplayName("Test Json files compare stylish format")
     public void testGenerateJsonStylish() throws Exception {
-        Path resourceDirectory = Paths.get("src", "test", "resources");
+        Path resourceDirectory = Paths.get("src", "test", "resources", "fixtures");
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
         Path firstFilePath = Paths.get(absolutePath, FIRST_FILE_JSON).toAbsolutePath().normalize();
@@ -44,7 +43,7 @@ public class AppTest {
 
         String expected = Files.readString(expectedFilePath);
 
-        String actual = App.generate(firstFilePath.toString(), secondFilePath.toString(), STYLISH_FORMAT);
+        String actual = Differ.generate(firstFilePath.toString(), secondFilePath.toString(), STYLISH_FORMAT);
 
         Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")), Arrays.stream(expected.split("\n")));
 
@@ -53,7 +52,7 @@ public class AppTest {
     @Test
     @DisplayName("Test yaml files compare stylish format")
     public void testGenerateYamlStylish() throws Exception {
-        Path resourceDirectory = Paths.get("src", "test", "resources");
+        Path resourceDirectory = Paths.get("src", "test", "resources", "fixtures");
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
         Path firstFilePath = Paths.get(absolutePath, FIRST_FILE_YAML).toAbsolutePath().normalize();
@@ -63,7 +62,7 @@ public class AppTest {
 
         String expected = Files.readString(expectedFilePath);
 
-        String actual = App.generate(firstFilePath.toString(), secondFilePath.toString(), STYLISH_FORMAT);
+        String actual = Differ.generate(firstFilePath.toString(), secondFilePath.toString(), STYLISH_FORMAT);
 
         Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")), Arrays.stream(expected.split("\n")));
 
@@ -72,7 +71,7 @@ public class AppTest {
     @Test
     @DisplayName("Test yaml files compare plain format")
     public void testGenerateYamlPlain() throws Exception {
-        Path resourceDirectory = Paths.get("src", "test", "resources");
+        Path resourceDirectory = Paths.get("src", "test", "resources", "fixtures");
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
         Path firstFilePath = Paths.get(absolutePath, FIRST_FILE_YAML).toAbsolutePath().normalize();
@@ -82,7 +81,7 @@ public class AppTest {
 
         String expected = Files.readString(expectedFilePath);
 
-        String actual = App.generate(firstFilePath.toString(), secondFilePath.toString(), PLAIN_FORMAT);
+        String actual = Differ.generate(firstFilePath.toString(), secondFilePath.toString(), PLAIN_FORMAT);
 
         Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")), Arrays.stream(expected.split("\n")));
 
@@ -91,7 +90,7 @@ public class AppTest {
     @Test
     @DisplayName("Test yaml files compare json format")
     public void testGenerateYamlJson() throws Exception {
-        Path resourceDirectory = Paths.get("src", "test", "resources");
+        Path resourceDirectory = Paths.get("src", "test", "resources", "fixtures");
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
         Path firstFilePath = Paths.get(absolutePath, FIRST_FILE_YAML).toAbsolutePath().normalize();
@@ -101,7 +100,7 @@ public class AppTest {
 
         String expected = Files.readString(expectedFilePath);
 
-        String actual = App.generate(firstFilePath.toString(), secondFilePath.toString(), JSON_FORMAT);
+        String actual = Differ.generate(firstFilePath.toString(), secondFilePath.toString(), JSON_FORMAT);
 
         ObjectMapper om = new ObjectMapper();
 
@@ -125,3 +124,4 @@ public class AppTest {
         }
     }
 }
+
