@@ -36,10 +36,6 @@ public class Differ {
         return Formatter.convertToString(resultMapCompare, format);
     }
 
-    public static Map<String, Map<String, Object>> generate(Map<String,
-            Object> firstMap, Map<String, Object> secondMap) {
-        return compare(firstMap, secondMap);
-    }
 
     public static Map<String, Map<String, Object>> compare(Map<String, Object> firstMap,
                                                            Map<String, Object> secondMap) {
