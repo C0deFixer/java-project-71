@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class PlainFormatter {
     public static String convertToString(Map<String, Map<String, Object>> map) {
-        final StringBuilder sb = new StringBuilder("{");
+        final StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, Map<String, Object>> entKey : map.entrySet()) {
             Map<String, Object> mapDiffer = entKey.getValue();
             String type = mapDiffer.get("type").toString();
@@ -26,7 +26,6 @@ public class PlainFormatter {
 
             }
         }
-        sb.append("\n}");
         return sb.toString();
     }
 
