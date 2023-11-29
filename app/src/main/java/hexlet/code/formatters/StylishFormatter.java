@@ -10,17 +10,17 @@ public class StylishFormatter {
             String type = mapDiffer.get("type").toString();
             switch (type) {
                 case "added":
-                    getAppendStylish(sb, "+", entKey.getKey(), mapDiffer, "newValue");
+                    getAppendStylish(sb, " +", entKey.getKey(), mapDiffer, "newValue");
                     break;
                 case "deleted":
-                    getAppendStylish(sb, "-", entKey.getKey(), mapDiffer, "oldValue");
+                    getAppendStylish(sb, " -", entKey.getKey(), mapDiffer, "oldValue");
                     break;
                 case "changed":
-                    getAppendStylish(sb, "-", entKey.getKey(), mapDiffer, "oldValue");
-                    getAppendStylish(sb, "+", entKey.getKey(), mapDiffer, "newValue");
+                    getAppendStylish(sb, " -", entKey.getKey(), mapDiffer, "oldValue");
+                    getAppendStylish(sb, " +", entKey.getKey(), mapDiffer, "newValue");
                     break;
                 default: //equals
-                    getAppendStylish(sb, " ", entKey.getKey(), mapDiffer, "oldValue");
+                    getAppendStylish(sb, "  ", entKey.getKey(), mapDiffer, "oldValue");
             }
         }
         sb.append("\n}");
