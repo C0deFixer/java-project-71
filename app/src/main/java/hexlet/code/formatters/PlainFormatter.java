@@ -2,59 +2,48 @@ package hexlet.code.formatters;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class PlainFormatter {
     public static String convertToString(Map<String, Map<String, Object>> map) {
-        final StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, Map<String, Object>> entKey : map.entrySet()) {
-            Map<String, Object> mapDiffer = entKey.getValue();
-            String type = mapDiffer.get("type").toString();
-            switch (type) {
-                case "added":
-                    getAppendPlain(sb, " was added with value: ", entKey.getKey(), mapDiffer, "newValue");
-                    break;
-                case "deleted":
-                    getAppendPlain(sb, " was removed", entKey.getKey(), mapDiffer, "");
-                    break;
-                case "changed":
-                    getAppendPlain(sb, " was updated. From ", entKey.getKey(), mapDiffer, "oldValue");
-                    sb.append(" to ");
-                    getAppendObjectToString(sb, mapDiffer.get("newValue"));
-                    break;
-                default: //equals
+        return map.entrySet().stream()
+                .filter(x -> !x.getValue().get("type").equals("equals"))
+                .map(x -> format(x.getKey(), x.getValue()))
+                .collect(Collectors.joining("\n"));
 
-            }
-        }
-        return sb.toString();
     }
 
-    public static void getAppendPlain(StringBuilder sb,
-                                      String operationString,
-                                      String entKey,
-                                      Map<String, Object> mapDiffer,
-                                      String keyValue) {
-        sb.append("\n ")
-                .append("Property '")
-                .append(entKey)
-                .append("'")
-                .append(operationString);
-        if (keyValue.isBlank()) {
-            return;
+    private static String format(String key, Map<String, Object> mapDiffer) {
+        // Map Compare:  key - is a Name of Value, mapDiffer - contains type of modification and old & new values
+        String type = mapDiffer.get("type").toString();
+        switch (type) {
+            case "deleted":
+                //Property 'key1' was removed
+                return String.format("Property '%s' was removed", key);
+            case "added":
+                //Property 'key2' was added with value: 'value2'
+                return String.format("Property '%s' was added with value: %s",
+                        key,
+                        formatObjectToString(mapDiffer.get("newValue")));
+            case "changed":
+                //Property 'chars2' was updated. From [complex value] to false
+                return  String.format("Property '%s' was updated. From %s to %s",
+                        key,
+                        formatObjectToString(mapDiffer.get("oldValue")),
+                        formatObjectToString(mapDiffer.get("newValue")));
+            default: //equals
+                return "";
         }
-        Object value = mapDiffer.get(keyValue);
-        getAppendObjectToString(sb, value);
     }
 
-    public static void getAppendObjectToString(StringBuilder sb, Object value) {
+    public static String formatObjectToString(Object value) {
         if (value instanceof String) {
-            sb.append("'")
-                    .append(value)
-                    .append("'");
+            return String.format("'%s'", value);
         } else if (value instanceof List<?> || value instanceof Map<?, ?>) {
-            sb.append("[complex value]");
+            return "[complex value]";
         } else {
-            sb.append(value == null ? "null" : value.toString());
+            return value == null ? "null" : value.toString();
         }
     }
 

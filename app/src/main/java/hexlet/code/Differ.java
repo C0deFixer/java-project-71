@@ -43,15 +43,17 @@ public class Differ {
 
     public static Map<String, Map<String, Object>> compare(Map<String, Object> firstMap,
                                                            Map<String, Object> secondMap) {
-        Set<String> keys = Stream.concat(firstMap.keySet().stream(), secondMap.keySet().stream())
+        //collect all names of values in sorted keySet
+        Set<String> keysValues = Stream.concat(firstMap.keySet().stream(), secondMap.keySet().stream())
                 .sorted()
                 .collect(Collectors.toCollection(LinkedHashSet::new));
 
-        // Map Compare:  Key - is a Key, Value is a mapDiffer - contains type of modification and old & new values
+        // Map Compare:  Key - is a Name of Value,
+        // Value is a mapDiffer - contains type of modification and old & new values
         Map<String, Map<String, Object>> resultMapCompare = new LinkedHashMap<>();
 
 
-        for (String key : keys) {
+        for (String key : keysValues) {
             Map<String, Object> mapDiffer = new HashMap<>();
             if (!firstMap.containsKey(key)) {
                 //added

@@ -45,6 +45,7 @@ class DifferTest {
 
         String actual = Differ.generate(firstFilePath.toString(), secondFilePath.toString(), STYLISH_FORMAT);
 
+
         Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")), Arrays.stream(expected.split("\n")));
 
     }
