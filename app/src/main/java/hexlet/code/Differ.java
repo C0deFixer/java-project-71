@@ -58,28 +58,21 @@ public class Differ {
         return Formatter.convertToString(resultMapCompare, format);
     }
 
-    public static Path getAbsoluteFilePath(String filePathString) throws Exception {
+    public static Path getAbsoluteFilePath(String filePathString) {
         // get AbsolutePath
-        Path filePath = Paths.get(filePathString).toAbsolutePath().normalize();
-
-        // Is Exist
-        if (!Files.exists(filePath)) {
-            throw new Exception("File '" + filePathString + "' does not exist");
-        }
-
-        return filePath;
+        return Paths.get(filePathString).toAbsolutePath().normalize();
     }
 
 
     public static boolean isFileFormatMatch(Path filePath, String fileFormat) {
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:*." + fileFormat);
-        if (matcher.matches(filePath)) {
-            return true;
-        }
-        return false;
+        return matcher.matches(filePath);
     }
-
     public static String readContentFile(Path filePath) throws Exception {
+        // Is Exist
+        if (!Files.exists(filePath)) {
+            throw new Exception("File '" + filePath + "' does not exist");
+        }
         return Files.readString(filePath);
     }
 

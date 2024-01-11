@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -13,37 +14,64 @@ import java.util.Arrays;
 
 class DifferTest {
 
-    public static final String STYLISH_FORMAT = "stylish";
-    public static final String PLAIN_FORMAT = "plain";
-    public static final String JSON_FORMAT = "json";
-
     @ParameterizedTest
+    @DisplayName("Test default (stylish) format")
     @CsvSource({
-        ", file1.json, file2.json, expected_json.txt",
-        "plain, file1.yaml, file2.yaml, expected_yaml_plain.txt",
-        "stylish, file1.yaml, file2.yaml, expected_yaml_stylish.txt",
-        "json, file1.yaml, file2.yaml, expected_yaml_json.json"
+        "file1.json, file2.json, expected_json_stylish.txt",
+        "file1.yaml, file2.yaml, expected_yaml_stylish.txt",
     })
-    public void testGenerate(String format,
-                             String firstFileName,
-                             String secondFileName,
-                             String expectedFileName) throws Exception {
+    public void testGenerateDefaultFormat(
+            String firstFileName,
+            String secondFileName,
+            String expectedFileName) throws Exception {
         String expected = readFileContent(expectedFileName);
         String actual;
-        if (format == null || format instanceof String && format.isEmpty()) {
-            actual = Differ.generate(getFilePath(firstFileName).toString(),
-                    getFilePath(secondFileName).toString());
-        } else {
-            actual = Differ.generate(getFilePath(firstFileName).toString(),
-                    getFilePath(secondFileName).toString(), format);
-        }
 
-        if (format != null && format.equals(JSON_FORMAT)) {
-            JSONAssert.assertEquals(expected, actual, false);
-        } else {
-            Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")),
-                    Arrays.stream(expected.split("\n")));
-        }
+        actual = Differ.generate(getFilePath(firstFileName).toString(),
+                getFilePath(secondFileName).toString());
+
+        Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")),
+                Arrays.stream(expected.split("\n")));
+    }
+
+    @ParameterizedTest
+    @DisplayName("Test stylish & plain format output")
+    @CsvSource({
+        "stylish, file1.json, file2.json, expected_json_stylish.txt",
+        "stylish, file1.yaml, file2.yaml, expected_yaml_stylish.txt",
+        "plain, file1.json, file2.json, expected_json_plain.txt",
+        "plain, file1.yaml, file2.yaml, expected_yaml_plain.txt"
+
+    })
+    public void testGenerateTxt(String format,
+                                String firstFileName,
+                                String secondFileName,
+                                String expectedFileName) throws Exception {
+        String expected = readFileContent(expectedFileName);
+        String actual;
+        actual = Differ.generate(getFilePath(firstFileName).toString(),
+                getFilePath(secondFileName).toString(), format);
+        Assertions.assertLinesMatch(Arrays.stream(actual.split("\n")),
+                Arrays.stream(expected.split("\n")));
+    }
+
+    @ParameterizedTest
+    @DisplayName("Test JSON format output")
+    @CsvSource({
+        "json, file1.json, file2.json, expected_json_json.json",
+        "json, file1.yaml, file2.yaml, expected_yaml_json.json"
+    })
+
+    public void testGenerateJSON(String format,
+                                 String firstFileName,
+                                 String secondFileName,
+                                 String expectedFileName) throws Exception {
+        String expected = readFileContent(expectedFileName);
+        String actual;
+        actual = Differ.generate(getFilePath(firstFileName).toString(),
+                getFilePath(secondFileName).toString(), format);
+
+        JSONAssert.assertEquals(expected, actual, false);
     }
 
     public Path getFilePath(String fileName) {
@@ -53,8 +81,7 @@ class DifferTest {
     }
 
     public String readFileContent(String fileName) throws Exception {
-        String result = Files.readString(getFilePath(fileName));
-        return result;
+        return Files.readString(getFilePath(fileName));
     }
 
 
