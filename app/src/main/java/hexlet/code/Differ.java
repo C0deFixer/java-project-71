@@ -14,21 +14,6 @@ public class Differ {
             "json", List.of("json", "jsn"),
             "yaml", List.of("yml", "yaml"));
 
-    public static String getFileFormat(Path fileName) {
-        String fileFormatresult = "";
-        for (String fileFormat : SUPPORTED_FILE_FORMATS.keySet()) {
-            for (String fileFormatEndOf : SUPPORTED_FILE_FORMATS.get(fileFormat)) {
-                if (isFileFormatMatch(fileName.getFileName(), fileFormatEndOf)) {
-                    fileFormatresult = fileFormat;
-                    break;
-                }
-            }
-        }
-
-        return fileFormatresult.isEmpty() ? fileName.toString()
-                .substring(fileName.toString().lastIndexOf(".")) : fileFormatresult;
-
-    }
 
     public static String generate(String file1, String file2) throws Exception {
         return generate(file1, file2, "stylish");
@@ -40,8 +25,8 @@ public class Differ {
         Path filePath2 = getAbsoluteFilePath(file2);
 
 
-        String fileFormat1 = Differ.getFileFormat(filePath1);
-        String fileFormat2 = Differ.getFileFormat(filePath2);
+        String fileFormat1 = getFileFormat(file1);
+        String fileFormat2 = getFileFormat(file2);
 
         if (!fileFormat1.equals(fileFormat2)) {
             throw new Exception("Files have different formats !");
@@ -63,11 +48,6 @@ public class Differ {
         return Paths.get(filePathString).toAbsolutePath().normalize();
     }
 
-
-    public static boolean isFileFormatMatch(Path filePath, String fileFormat) {
-        PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:*." + fileFormat);
-        return matcher.matches(filePath);
-    }
     public static String readContentFile(Path filePath) throws Exception {
         // Is Exist
         if (!Files.exists(filePath)) {
@@ -76,6 +56,14 @@ public class Differ {
         return Files.readString(filePath);
     }
 
+    public static String getFileFormat(String fileName) throws Exception {
+        int indexOfDelimiter = fileName.lastIndexOf(".");
+        if (indexOfDelimiter == -1 | indexOfDelimiter == fileName.length()-1) {
+            throw new Exception("File format couldn't be defined");
+        } else {
+            return fileName.substring(indexOfDelimiter+1);
+        }
+    }
 
 }
 

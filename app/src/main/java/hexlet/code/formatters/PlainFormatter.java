@@ -28,7 +28,7 @@ public class PlainFormatter {
                         formatObjectToString(mapDiffer.get("newValue")));
             case "changed":
                 //Property 'chars2' was updated. From [complex value] to false
-                return  String.format("Property '%s' was updated. From %s to %s",
+                return String.format("Property '%s' was updated. From %s to %s",
                         key,
                         formatObjectToString(mapDiffer.get("oldValue")),
                         formatObjectToString(mapDiffer.get("newValue")));

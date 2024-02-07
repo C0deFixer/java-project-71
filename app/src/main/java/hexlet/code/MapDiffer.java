@@ -11,6 +11,7 @@ import java.util.Map;
 
 
 public class MapDiffer {
+
     public static Map<String, Map<String, Object>> compare(Map<String, Object> firstMap,
                                                            Map<String, Object> secondMap) {
         //collect all names of values in sorted keySet
