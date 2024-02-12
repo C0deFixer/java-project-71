@@ -37,7 +37,7 @@ class DifferTest {
     @ParameterizedTest
     @DisplayName("Test stylish & plain format output")
     @CsvSource({
-        "stylish, file1.json, file2.json, expected_json.txt",
+        "stylish, file1.json, file2.json, expected_stylish.txt",
         "stylish, file1.yaml, file2.yaml, expected_stylish.txt",
         "plain, file1.json, file2.json, expected_plain.txt",
         "plain, file1.yaml, file2.yaml, expected_plain.txt"

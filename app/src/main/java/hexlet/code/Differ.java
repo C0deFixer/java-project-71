@@ -3,17 +3,9 @@ package hexlet.code;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.FileSystems;
-import java.nio.file.PathMatcher;
-import java.util.List;
 import java.util.Map;
 
 public class Differ {
-    //Map of Lists file Format End Of, which supported end could be parsed
-    public static final Map<String, List<String>> SUPPORTED_FILE_FORMATS = Map.of(
-            "json", List.of("json", "jsn"),
-            "yaml", List.of("yml", "yaml"));
-
 
     public static String generate(String file1, String file2) throws Exception {
         return generate(file1, file2, "stylish");
@@ -58,10 +50,10 @@ public class Differ {
 
     public static String getFileFormat(String fileName) throws Exception {
         int indexOfDelimiter = fileName.lastIndexOf(".");
-        if (indexOfDelimiter == -1 | indexOfDelimiter == fileName.length()-1) {
+        if (indexOfDelimiter == -1 | indexOfDelimiter == fileName.length() - 1) {
             throw new Exception("File format couldn't be defined");
         } else {
-            return fileName.substring(indexOfDelimiter+1);
+            return fileName.substring(indexOfDelimiter + 1);
         }
     }
 

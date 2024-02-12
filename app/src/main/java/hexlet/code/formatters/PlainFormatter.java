@@ -6,15 +6,24 @@ import java.util.stream.Collectors;
 
 
 public class PlainFormatter {
-    public static String convertToString(Map<String, Map<String, Object>> map) {
+    public static String convertToString(Map<String, Map<String, Object>> map) throws Exception {
         return map.entrySet().stream()
                 .filter(x -> !x.getValue().get("type").equals("equals"))
-                .map(x -> format(x.getKey(), x.getValue()))
-                .collect(Collectors.joining("\n"));
+                .map(x -> {
+                            String key = x.getKey();
+                            Map<String, Object> value = x.getValue();
+                            try {
+                                return format(key, value);
+                            } catch (Exception ex) {
 
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                )
+                .collect(Collectors.joining("\n"));
     }
 
-    private static String format(String key, Map<String, Object> mapDiffer) {
+    private static String format(String key, Map<String, Object> mapDiffer) throws Exception {
         // Map Compare:  key - is a Name of Value, mapDiffer - contains type of modification and old & new values
         String type = mapDiffer.get("type").toString();
         switch (type) {
@@ -32,8 +41,10 @@ public class PlainFormatter {
                         key,
                         formatObjectToString(mapDiffer.get("oldValue")),
                         formatObjectToString(mapDiffer.get("newValue")));
-            default: //equals
+            case "equals":
                 return "";
+            default:
+                throw new Exception("unknown tipe of diff node!");
         }
     }
 

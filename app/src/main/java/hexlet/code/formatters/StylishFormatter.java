@@ -3,7 +3,7 @@ package hexlet.code.formatters;
 import java.util.Map;
 
 public class StylishFormatter {
-    public static String convertToString(Map<String, Map<String, Object>> map) {
+    public static String convertToString(Map<String, Map<String, Object>> map) throws Exception {
         final StringBuilder sb = new StringBuilder("{");
         for (Map.Entry<String, Map<String, Object>> entKey : map.entrySet()) {
             Map<String, Object> mapDiffer = entKey.getValue();
@@ -19,8 +19,12 @@ public class StylishFormatter {
                     getAppendStylish(sb, " -", entKey.getKey(), mapDiffer, "oldValue");
                     getAppendStylish(sb, " +", entKey.getKey(), mapDiffer, "newValue");
                     break;
-                default: //equals
+                case "equals":
                     getAppendStylish(sb, "  ", entKey.getKey(), mapDiffer, "oldValue");
+                    break;
+                default:
+                    throw new Exception("unknown tipe of diff node!");
+
             }
         }
         sb.append("\n}");
