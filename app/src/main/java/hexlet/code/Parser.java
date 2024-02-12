@@ -14,7 +14,7 @@ public class Parser {
         switch (fileFormat) {
             case "json":
                 return getJsonDataAsMap(content);
-            case "yaml":
+            case "yaml", "yml":
                 return getYamlDataAsMap(content);
             default:
                 throw new Exception("Unknown File format: '" + fileFormat + "' !");
