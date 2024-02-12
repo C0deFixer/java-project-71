@@ -17,8 +17,8 @@ class DifferTest {
     @ParameterizedTest
     @DisplayName("Test default (stylish) format")
     @CsvSource({
-        "file1.json, file2.json, expected_json_stylish.txt",
-        "file1.yaml, file2.yaml, expected_yaml_stylish.txt",
+        "file1.json, file2.json, expected_stylish.txt",
+        "file1.yaml, file2.yaml, expected_stylish.txt",
     })
     public void testGenerateDefaultFormat(
             String firstFileName,
@@ -37,10 +37,10 @@ class DifferTest {
     @ParameterizedTest
     @DisplayName("Test stylish & plain format output")
     @CsvSource({
-        "stylish, file1.json, file2.json, expected_json_stylish.txt",
-        "stylish, file1.yaml, file2.yaml, expected_yaml_stylish.txt",
-        "plain, file1.json, file2.json, expected_json_plain.txt",
-        "plain, file1.yaml, file2.yaml, expected_yaml_plain.txt"
+        "stylish, file1.json, file2.json, expected_json.txt",
+        "stylish, file1.yaml, file2.yaml, expected_stylish.txt",
+        "plain, file1.json, file2.json, expected_plain.txt",
+        "plain, file1.yaml, file2.yaml, expected_plain.txt"
 
     })
     public void testGenerateTxt(String format,
@@ -58,8 +58,8 @@ class DifferTest {
     @ParameterizedTest
     @DisplayName("Test JSON format output")
     @CsvSource({
-        "json, file1.json, file2.json, expected_json_json.json",
-        "json, file1.yaml, file2.yaml, expected_yaml_json.json"
+        "json, file1.json, file2.json, expected_json.json",
+        "json, file1.yaml, file2.yaml, expected_json.json"
     })
 
     public void testGenerateJSON(String format,
